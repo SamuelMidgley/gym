@@ -1,0 +1,16 @@
+.calendar-main {
+  table {
+    th,
+    td {
+      position: relative;
+      height: 50px;
+      width: 50px;
+      text-align: center;
+    }
+
+    td:hover {
+      border-radius: 50%;
+      background-color: var(--brand-3);
+    }
+  }
+}

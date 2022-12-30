@@ -1,22 +1,35 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Calendar from './pages/calendar/Calendar'
+import ExerciseHome from './pages/exercise/home/ExerciseHome'
+import Exercise from './pages/exercise/id/Exercise'
 import Home from './pages/home/Home'
 import NotFound from './pages/not-found/NotFound'
-import WorkoutList from './pages/workout-list/WorkoutList'
-import Workout from './pages/workout/Workout'
+import WorkoutHome from './pages/workout/home/WorkoutHome'
+import Workout from './pages/workout/id/Workout'
+
+import './App.scss'
+import TopBar from './components/top-bar/TopBar'
+import Search from './pages/search/Search'
 
 export function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/gym/home" />} />
-      <Route path="/gym" element={<Navigate to="/gym/home" />} />
-      <Route path="/gym/home" element={<Home />} />
-      <Route path="/gym/workout" element={<WorkoutList />} />
-      <Route path="/gym/workout/add" element={<Home />} />
-      <Route path="/gym/workout/id" element={<Workout />} />
-      <Route path="/gym/calendar" element={<Calendar />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <TopBar />
+      <Routes>
+        <Route path="/" element={<Navigate to="/gym/home" />} />
+        <Route path="/gym" element={<Navigate to="/gym/home" />} />
+        <Route path="/gym/home" element={<Home />} />
+        <Route path="/gym/workout" element={<WorkoutHome />} />
+        {/* <Route path="/gym/workout/add" element={<Home />} /> */}
+        <Route path="/gym/workout/:workoutId" element={<Workout />} />
+        <Route path="/gym/exercise" element={<ExerciseHome />} />
+        {/* <Route path="/gym/exercise/add" element={<Home />} /> */}
+        <Route path="/gym/exercise/:exerciseId" element={<Exercise />} />
+        <Route path="/gym/calendar" element={<Calendar />} />
+        <Route path="/gym/search" element={<Search />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   )
 }
 

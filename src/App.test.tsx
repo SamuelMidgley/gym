@@ -26,6 +26,6 @@ describe('App', () => {
       screen.getByRole('heading', {
         level: 1,
       })
-    ).toHaveTextContent('Not Found')
+    ).toHaveTextContent('Error 404')
   })
 })

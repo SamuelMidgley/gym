@@ -1,0 +1,26 @@
+.search-card {
+  background-color: var(--brand-3);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 2rem;
+  margin: 10px 0px;
+
+  .search-icon {
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: var(--font-color);
+    }
+  }
+
+  .search-type {
+    display: flex;
+    align-items: center;
+
+    p::first-letter {
+      text-transform: uppercase;
+    }
+  }
+}

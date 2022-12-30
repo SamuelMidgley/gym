@@ -1,0 +1,138 @@
+:root {
+  --font-color: #f0f8ff;
+  --theme-color: #f0f8ff;
+  --red: #ff4495;
+  --green: #52e3c2;
+  --blue: #0781ff;
+  --purple: #d211fe;
+  --bright-orange: #ff4b12;
+  --yellow: #ffd900;
+  --orange: #ed8a19;
+  --light-blue: #40c4ff;
+  --gray: #546e7a;
+  --gold: #efb068;
+  --light-gold: #ffebb7;
+  --brand-0: #1a1a21;
+  --brand-1: #282833;
+  --brand-2: #32323e;
+  --brand-3: #393945;
+  --brand-4: #40424f;
+  --brand-5: #4d505f;
+  --brand-6: #6e7288;
+  --brand-7: #8f94ab;
+  --brand-8: #b4b8cd;
+  --contrast: #fff;
+  --button-green: #52e3c2;
+  --button-green-hover: #4cc0a8;
+  --type-gray: #8f94ab;
+  --marketing-blue: #60a9ff;
+  --marketing-dark-blue: #608aff;
+  --marketing-darker-blue: #4d5eaf;
+  --marketing-lighter-text: #d7e8ff;
+  --marketing-light-text: #c7d6ff;
+  --gradient-green: rgba(82, 227, 194, 0.16);
+  --gradient-blue: rgba(96, 138, 255, 0.25);
+  --gradient-transparent: hsla(0, 0%, 100%, 0);
+  --background-dark: #32323e;
+  --rules-dark: #4d505f;
+  --rules-light: #d6d6d8;
+  --background-light: #f5f5f5;
+  --lh: 1.15;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@font-face {
+  font-family: myFirstFont;
+  src: url(/assets/d-din-exp.woff);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  color: var(--font-color);
+  font-family: myFirstFont, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+
+  &::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--font-color);
+    opacity: 1; /* Firefox */
+    font-family: myFirstFont, system-ui, -apple-system, BlinkMacSystemFont,
+      'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+      'Helvetica Neue', sans-serif;
+  }
+
+  &:focus-visible {
+    outline: 0px;
+  }
+}
+
+body {
+  font-family: myFirstFont, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+  color: var(--font-color);
+  line-height: 1.6;
+  background: var(--brand-2);
+  margin: 0 1rem;
+}
+
+button {
+  font-family: myFirstFont, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--green);
+  border: 0px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: var(--contrast);
+
+  &:hover {
+    color: var(--green);
+  }
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  > div {
+    max-width: 900px;
+    width: 100%;
+  }
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
