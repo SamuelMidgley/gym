@@ -1,16 +1,66 @@
 .calendar-main {
+  margin-top: 20px;
+
+  .calendar-main-header {
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+      text-align: center;
+    }
+
+    button {
+      background-color: var(--brand-2);
+
+      svg {
+        fill: var(--font-color);
+      }
+    }
+  }
+
   table {
+    border-spacing: 0px 2px;
+    border-collapse: separate;
+
     th,
     td {
       position: relative;
       height: 50px;
       width: 50px;
       text-align: center;
+      border: 0px;
     }
 
-    td:hover {
-      border-radius: 50%;
+    td > div {
+      height: 50px;
+      width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &.prev-month {
+        color: var(--brand-6);
+      }
+
+      &:hover {
+        border-radius: 50%;
+        background-color: var(--green);
+      }
+    }
+
+    .highlighted {
       background-color: var(--brand-3);
+
+      &.h-start {
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+      }
+
+      &.h-end {
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+      }
     }
   }
 }
