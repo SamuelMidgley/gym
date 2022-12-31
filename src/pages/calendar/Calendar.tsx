@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { format } from 'date-fns'
+import classNames from 'classnames'
 
 import getMonthArray, { IDay } from './utils'
 
@@ -10,35 +11,50 @@ import RightIcon from '../../components/icons/RightIcon'
 import DoubleRightIcon from '../../components/icons/DoubleRight'
 
 interface ITableCell extends IDay {
+  dayIndex: number[]
+  selectedDate: number[]
   onClickHandler: (e: React.MouseEvent<HTMLTableCellElement>) => void
 }
 
 function TableCell(props: ITableCell) {
-  const { date, thisMonth, onClickHandler } = props
+  const { date, thisMonth, dayIndex, selectedDate, onClickHandler } = props
+
+  const isSelected = dayIndex.toString() === selectedDate.toString()
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <td onClick={onClickHandler}>
-      <div className={!thisMonth ? 'prev-month' : ''}>{date}</div>
+      <div
+        className={classNames({
+          'prev-month': !thisMonth,
+          'selected-date': isSelected,
+        })}
+      >
+        {date}
+      </div>
     </td>
   )
 }
 
 interface IDateRow {
+  weekIndex: number
+  selectedDate: number[]
   dayList: IDay[]
   onClickHandler: (e: React.MouseEvent<HTMLTableCellElement>) => void
 }
 
 function DateRow(props: IDateRow) {
-  const { dayList, onClickHandler } = props
+  const { dayList, weekIndex, selectedDate, onClickHandler } = props
 
   return (
     <tr>
-      {dayList.map((day) => {
+      {dayList.map((day, index) => {
         const { date, thisMonth } = day
         return (
           <TableCell
             key={`${date}_${thisMonth}`}
+            dayIndex={[weekIndex, index]}
+            selectedDate={selectedDate}
             date={date}
             thisMonth={thisMonth}
             onClickHandler={onClickHandler}
@@ -53,6 +69,7 @@ export default function Calendar() {
   const [month, setMonth] = useState(11)
   const [year, setYear] = useState(2022)
   const [monthArray, setMonthArray] = useState<IDay[][]>([])
+  const [selectedDate, setSelectedDate] = useState<number[]>([])
 
   useEffect(() => {
     const array = getMonthArray(month, year)
@@ -73,10 +90,10 @@ export default function Calendar() {
       }
 
       const dayIndex = cellTarget.cellIndex
-      const weekIndex = (cellTarget.parentElement as HTMLTableRowElement)
-        .rowIndex
+      const weekIndex =
+        (cellTarget.parentElement as HTMLTableRowElement).rowIndex - 1
 
-      return [dayIndex, weekIndex]
+      setSelectedDate([weekIndex, dayIndex])
     },
     []
   )
@@ -129,64 +146,15 @@ export default function Calendar() {
           <tbody>
             {monthArray.map((week, index) => (
               <DateRow
+                // Hacky key value
+                // eslint-disable-next-line react/no-array-index-key
                 key={index}
+                weekIndex={index}
                 dayList={week}
+                selectedDate={selectedDate}
                 onClickHandler={onClickHandler}
               />
             ))}
-            {/* <tr>
-              <TableCell value={1} onClickHandler={onClickHandler} />
-              <TableCell value={1} onClickHandler={onClickHandler} />
-              <TableCell value={1} onClickHandler={onClickHandler} />
-              <TableCell value={1} onClickHandler={onClickHandler} />
-              <TableCell value={1} onClickHandler={onClickHandler} />
-              <TableCell value={1} onClickHandler={onClickHandler} />
-              <TableCell value={1} onClickHandler={onClickHandler} />
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>2</td>
-              <td className="highlighted h-start">
-                <div>2</div>
-              </td>
-              <td className="highlighted">
-                <div>2</div>
-              </td>
-              <td className="highlighted">
-                <div>2</div>
-              </td>
-              <td className="highlighted h-end">
-                <div>2</div>
-              </td>
-              <td>2</td>
-            </tr>
-            <tr>
-              {[3, 3, 3, 3, 3, 3, 3].map((num, index) => (
-                <TableCell
-                  value={num}
-                  key={index}
-                  onClickHandler={onClickHandler}
-                />
-              ))}
-            </tr>
-            <tr>
-              {[4, 4, 4, 4, 4, 4, 4].map((num, index) => (
-                <TableCell
-                  value={num}
-                  key={index}
-                  onClickHandler={onClickHandler}
-                />
-              ))}
-            </tr>
-            <tr>
-              {[5, 5, 5, 5, 5, 5, 5].map((num, index) => (
-                <TableCell
-                  value={num}
-                  key={index}
-                  onClickHandler={onClickHandler}
-                />
-              ))}
-            </tr> */}
           </tbody>
         </table>
       </main>
