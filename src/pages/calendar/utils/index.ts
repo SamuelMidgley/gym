@@ -2,7 +2,7 @@ import { endOfMonth, getDay, startOfMonth, getDate } from 'date-fns'
 
 export interface IDay {
   date: number
-  thisMonth: boolean
+  month: number
 }
 
 function sliceIntoChunks(arr: IDay[], chunkSize: number) {
@@ -31,7 +31,7 @@ export default function getMonthArray(month: number, year: number) {
     for (let index = 0; index < startDayValue - 1; index += 1) {
       const dayObject: IDay = {
         date: prevMonthEndDate,
-        thisMonth: false,
+        month: month === 0 ? 11 : month - 1,
       }
       monthArray.unshift(dayObject)
       prevMonthEndDate -= 1
@@ -45,7 +45,7 @@ export default function getMonthArray(month: number, year: number) {
   for (let index = 1; index < endDate + 1; index += 1) {
     const dayObject: IDay = {
       date: index,
-      thisMonth: true,
+      month,
     }
     monthArray.push(dayObject)
   }
@@ -61,7 +61,7 @@ export default function getMonthArray(month: number, year: number) {
     for (let index = 1; index < remainingDays + 1; index += 1) {
       const dayObject: IDay = {
         date: index,
-        thisMonth: false,
+        month: month + 1,
       }
       monthArray.push(dayObject)
     }

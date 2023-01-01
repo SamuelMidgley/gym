@@ -1,70 +1,100 @@
 .calendar-main {
   margin-top: 20px;
+  display: flex;
+  gap: 3rem;
 
-  .calendar-main-header {
-    display: flex;
-    justify-content: space-between;
+  .calendar-month {
+    .calendar-main-header {
+      display: flex;
+      justify-content: space-between;
 
-    h2 {
-      text-align: center;
+      h2 {
+        text-align: center;
+      }
+
+      button {
+        background-color: var(--brand-2);
+
+        svg {
+          fill: var(--font-color);
+        }
+      }
     }
 
-    button {
-      background-color: var(--brand-2);
+    table {
+      border-spacing: 0px 2px;
+      border-collapse: separate;
 
-      svg {
-        fill: var(--font-color);
+      th,
+      td {
+        position: relative;
+        height: 50px;
+        width: 50px;
+        text-align: center;
+        border: 0px;
+      }
+
+      td > div {
+        height: 50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 50%;
+
+        &.prev-month {
+          color: var(--brand-6);
+        }
+
+        &.selected-date {
+          background-color: var(--green);
+        }
+
+        &.has-workout {
+          border: 1px solid var(--green);
+        }
+
+        &:hover {
+          background-color: var(--green);
+        }
+      }
+
+      .highlighted-date {
+        background-color: var(--brand-3);
+
+        &.h-start {
+          border-top-left-radius: 50%;
+          border-bottom-left-radius: 50%;
+        }
+
+        &.h-end {
+          border-top-right-radius: 50%;
+          border-bottom-right-radius: 50%;
+        }
       }
     }
   }
 
-  table {
-    border-spacing: 0px 2px;
-    border-collapse: separate;
-
-    th,
-    td {
-      position: relative;
-      height: 50px;
-      width: 50px;
+  .calendar-day {
+    width: 350px;
+    h2 {
       text-align: center;
-      border: 0px;
     }
 
-    td > div {
-      height: 50px;
-      width: 50px;
+    ::marker {
+      color: var(--green);
+    }
+
+    .add-button {
       display: flex;
-      align-items: center;
       justify-content: center;
-      cursor: pointer;
 
-      &.prev-month {
-        color: var(--brand-6);
-      }
-
-      &:hover {
-        border-radius: 50%;
-        background-color: var(--green);
-      }
-    }
-
-    .selected-date {
-      border-radius: 50%;
-      background-color: var(--green);
-    }
-
-    .highlighted-date {
-      background-color: var(--brand-3);
-
-      &.h-start {
-        border-top-left-radius: 50%;
-        border-bottom-left-radius: 50%;
-      }
-
-      &.h-end {
-        border-top-right-radius: 50%;
-        border-bottom-right-radius: 50%;
+      button {
+        font-size: 1rem;
+        padding: 20px;
+        border-radius: 20px;
+        cursor: pointer;
       }
     }
   }
