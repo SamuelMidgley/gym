@@ -47,13 +47,14 @@
   }
 }
 
-.home-main {
+main.home-main {
   margin-top: 100px;
-  margin-bottom: 300px;
+  margin-bottom: 100px;
+  gap: 3rem;
   display: grid;
   justify-items: center;
 
-  .home-links {
+  article.home-article {
     h2 {
       text-align: center;
       margin-bottom: 10px;
@@ -69,26 +70,58 @@
       justify-content: space-around;
       gap: 1rem;
 
-      > li > div {
-        display: grid;
-        justify-items: center;
-        width: 250px;
+      > li {
+        > div.home-today {
+          display: flex;
+          align-items: center;
 
-        svg {
-          fill: var(--contrast);
+          .today-time {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding-right: 1rem;
+          }
+
+          .today-icon {
+            svg {
+              fill: var(--font-color);
+            }
+            padding-right: 0.5rem;
+          }
+
+          .today-text {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 1rem;
+
+            .today-name {
+              padding-right: 1rem;
+            }
+          }
         }
 
-        > p {
-          text-align: center;
-        }
+        > div.quick-link {
+          display: grid;
+          justify-items: center;
+          width: 250px;
 
-        a {
-          margin-top: 5px;
-          padding: 5px 10px;
-          color: var(--brand-0);
-          border-radius: 20px;
-          cursor: pointer;
-          background-color: var(--green);
+          svg {
+            fill: var(--contrast);
+          }
+
+          > p {
+            text-align: center;
+          }
+
+          a {
+            margin-top: 5px;
+            padding: 5px 10px;
+            color: var(--brand-0);
+            border-radius: 20px;
+            cursor: pointer;
+            background-color: var(--green);
+          }
         }
       }
     }

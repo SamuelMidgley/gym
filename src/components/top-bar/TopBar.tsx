@@ -60,7 +60,7 @@ export default function TopBar() {
       <button type="button" onClick={onClickHandler}>
         <MenuIcon />
       </button>
-      <p>💪 Gym</p>
+      <h1>💪 Gym</h1>
       <ProfilePic />
       {showMenu && <TopBarMenu clickHandler={onClickHandler} />}
     </div>
