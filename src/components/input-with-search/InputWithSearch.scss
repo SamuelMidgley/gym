@@ -1,0 +1,26 @@
+.input-with-search {
+  background-color: var(--brand-3);
+  input {
+    padding: 5px;
+    font-size: 1rem;
+    border: 2px solid var(--green);
+    border-radius: 5px;
+  }
+
+  .input-results {
+    list-style: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid var(--brand-4);
+
+    > li {
+      padding: 5px;
+      cursor: pointer;
+
+      &.selected-result,
+      &:hover {
+        background-color: var(--brand-4);
+      }
+    }
+  }
+}
