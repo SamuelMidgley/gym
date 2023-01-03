@@ -39,16 +39,17 @@
     }
   }
 
-  .home-add button {
-    font-size: 1rem;
+  .home-add {
     padding: 20px;
     border-radius: 20px;
     cursor: pointer;
+    background-color: var(--green);
+    color: black;
   }
 }
 
 main.home-main {
-  margin-top: 100px;
+  margin-top: 80px;
   margin-bottom: 100px;
   gap: 3rem;
   display: grid;

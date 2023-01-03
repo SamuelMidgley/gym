@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import CalendarIcon from '../icons/CalendarIcon'
 import CloseIcon from '../icons/CloseIcon'
@@ -27,10 +27,6 @@ function TopBarMenu(props: ITopBarMenu) {
       </button>
 
       <nav className="top-bar-nav">
-        <Link to="gym/home" onClick={clickHandler}>
-          <HomeIcon />
-          Home
-        </Link>
         <Link to="gym/exercise" onClick={clickHandler}>
           <WeightIcon />
           Exercises
@@ -48,21 +44,71 @@ function TopBarMenu(props: ITopBarMenu) {
   )
 }
 
+interface INavBar {
+  onClickHandler: () => void
+  optionalClassName?: string
+}
+
+function NavBar(props: INavBar) {
+  const { onClickHandler, optionalClassName } = props
+
+  return (
+    <nav className={optionalClassName ? 'top-bar-nav-hor' : 'top-bar-nav'}>
+      <Link to="gym/exercise" onClick={onClickHandler}>
+        <WeightIcon />
+        Exercises
+      </Link>
+      <Link to="gym/workout" onClick={onClickHandler}>
+        <LogIcon />
+        Workouts
+      </Link>
+      <Link to="gym/calendar" onClick={onClickHandler}>
+        <CalendarIcon />
+        Calendar
+      </Link>
+    </nav>
+  )
+}
+
 export default function TopBar() {
   const [showMenu, setShowMenu] = useState(false)
+  const [reducedMenu, setReducedMenu] = useState<boolean>(false)
 
   const onClickHandler = useCallback(() => {
     setShowMenu((prevState) => !prevState)
   }, [])
 
+  function resizeHandler() {
+    console.log(window.innerWidth < 750)
+    setReducedMenu(window.innerWidth < 750)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeHandler)
+
+    return () => window.removeEventListener('resize', resizeHandler)
+  }, [])
+
   return (
     <div className="top-bar">
-      <button type="button" onClick={onClickHandler}>
-        <MenuIcon />
-      </button>
-      <h1>💪 Gym</h1>
+      {reducedMenu && (
+        <div>
+          <button type="button" onClick={onClickHandler}>
+            <MenuIcon />
+          </button>
+          {showMenu && <TopBarMenu clickHandler={onClickHandler} />}
+        </div>
+      )}
+      <Link to="/gym/home">
+        <h1>💪 Gym</h1>
+      </Link>
+      {!reducedMenu && (
+        <NavBar
+          onClickHandler={onClickHandler}
+          optionalClassName="nav-horizontal"
+        />
+      )}
       <ProfilePic />
-      {showMenu && <TopBarMenu clickHandler={onClickHandler} />}
     </div>
   )
 }

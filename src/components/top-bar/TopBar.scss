@@ -1,11 +1,13 @@
 .top-bar {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin-top: 10px;
+  justify-content: space-around;
+  padding: 10px 0;
   align-items: center;
   position: relative;
   z-index: 1;
+  max-width: 100% !important;
+  background-color: var(--brand-3);
 
   button {
     background-color: transparent;
@@ -14,6 +16,24 @@
 
     svg {
       fill: var(--font-color);
+    }
+  }
+
+  .top-bar-nav-hor {
+    display: flex;
+    gap: 2rem;
+
+    > a {
+      display: flex;
+      gap: 0.5rem;
+
+      &:hover svg {
+        fill: var(--green);
+      }
+
+      svg {
+        fill: var(--font-color);
+      }
     }
   }
 

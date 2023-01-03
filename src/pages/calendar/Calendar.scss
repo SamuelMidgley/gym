@@ -78,8 +78,10 @@
 
   .calendar-day {
     width: 350px;
+
     h2 {
       text-align: center;
+      margin-bottom: 20px;
     }
 
     ::marker {
@@ -89,6 +91,7 @@
     .add-button {
       display: flex;
       justify-content: center;
+      margin-top: 50px;
 
       button {
         font-size: 1rem;

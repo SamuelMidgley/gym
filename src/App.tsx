@@ -10,6 +10,7 @@ import Workout from './pages/workout/id/Workout'
 import './App.scss'
 import TopBar from './components/top-bar/TopBar'
 import Search from './pages/search/Search'
+import AddWorkout from './pages/workout/add/AddWorkout'
 
 export function App() {
   return (
@@ -20,7 +21,7 @@ export function App() {
         <Route path="/gym" element={<Navigate to="/gym/home" />} />
         <Route path="/gym/home" element={<Home />} />
         <Route path="/gym/workout" element={<WorkoutHome />} />
-        {/* <Route path="/gym/workout/add" element={<Home />} /> */}
+        <Route path="/gym/workout/add" element={<AddWorkout />} />
         <Route path="/gym/workout/:workoutId" element={<Workout />} />
         <Route path="/gym/exercise" element={<ExerciseHome />} />
         {/* <Route path="/gym/exercise/add" element={<Home />} /> */}

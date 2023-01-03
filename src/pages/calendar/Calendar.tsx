@@ -234,7 +234,7 @@ export default function Calendar() {
                 <li key={workout.workoutId}>
                   <Link to={`/gym/workout/${workout.workoutId}`}>
                     <div />
-                    <p>{`${format(workout.date, 'kk:mm')} : ${workout.name} : ${
+                    <p>{`${format(workout.date, 'HH:mm')} : ${workout.name} - ${
                       workout.location
                     }`}</p>
                   </Link>

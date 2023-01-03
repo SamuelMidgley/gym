@@ -58,9 +58,9 @@ function HomeHeader() {
         <SearchIcon />
         <SearchBar />
       </div>
-      <div className="home-add">
-        <button type="button">Add Workout</button>
-      </div>
+      <Link className="home-add" to="/gym/workout/add">
+        Add Workout
+      </Link>
     </header>
   )
 }
@@ -105,11 +105,11 @@ interface ITodayCard {
 
 function TodayCard(props: ITodayCard) {
   const { workout } = props
-  const { id, name, location, date, type } = workout
+  const { id, name, location, date } = workout
 
   return (
     <div className="home-today">
-      <div className="today-time">{format(date, 'H:m')}</div>
+      <div className="today-time">{format(date, 'HH:mm')}</div>
       <div className="today-icon">
         <WeightIcon />
       </div>
