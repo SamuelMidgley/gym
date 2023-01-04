@@ -1,9 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import classNames from 'classnames'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import ExpandIcon from '../icons/ExpandIcon'
 import getAllOptions, { IOptionResults } from './api'
 import './InputWithSearch.scss'
 
 interface IInputWithSearch {
   type: 'workout' | 'exercise'
+}
+
+const useFocus = () => {
+  const htmlElRef = useRef(null)
+  const setFocus = () => {
+    if (htmlElRef.current) {
+      htmlElRef.current.focus()
+    }
+  }
+
+  return [htmlElRef, setFocus]
 }
 
 export default function InputWithSearch(props: IInputWithSearch) {
@@ -13,14 +26,40 @@ export default function InputWithSearch(props: IInputWithSearch) {
   const [filteredResults, setFilteredResults] = useState<IOptionResults[]>([])
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const [showMenu, setShowMenu] = useState(false)
+  const [inputRef, setInputFocus] = useFocus()
+  const ref = useRef(null)
 
   useEffect(() => {
-    const newResults = results.filter((result) =>
-      result.name.toLowerCase().includes(value.toLowerCase())
-    )
+    let newResults
+
+    if (results.map((r) => r.name).includes(value)) {
+      newResults = results
+      setShowMenu(false)
+    } else {
+      newResults = results.filter((result) =>
+        result.name.toLowerCase().includes(value.toLowerCase())
+      )
+    }
     setFilteredResults(newResults)
     setSelectedIndex(-1)
   }, [value, results])
+
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowMenu(false)
+      }
+    }
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [ref])
 
   const onKeyDownHandler = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -53,18 +92,23 @@ export default function InputWithSearch(props: IInputWithSearch) {
 
   return (
     <div
-      className="input-with-search"
-      onMouseEnter={() => setShowMenu(true)}
-      onMouseLeave={() => setShowMenu(false)}
+      ref={ref}
+      className={classNames('input-with-search', { 'active-input': showMenu })}
+      onClick={() => {
+        setShowMenu((prevState) => !prevState)
+        setInputFocus()
+      }}
     >
-      <input
-        type="text"
-        value={value}
-        onKeyDown={onKeyDownHandler}
-        onChange={(e) => setValue((e.target as HTMLInputElement).value)}
-        onFocus={() => setShowMenu(true)}
-        // onBlur={() => setShowMenu(false)}
-      />
+      <div className="input-box">
+        <input
+          type="text"
+          value={value}
+          onKeyDown={onKeyDownHandler}
+          onChange={(e) => setValue((e.target as HTMLInputElement).value)}
+          ref={inputRef}
+        />
+        <ExpandIcon />
+      </div>
       {showMenu && filteredResults.length > 0 && (
         <ul className="input-results">
           {filteredResults.map((result, index) => (
