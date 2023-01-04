@@ -1,0 +1,64 @@
+.log-card {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: var(--brand-4);
+
+  .log-date {
+    padding: 10px;
+    font-weight: bold;
+    background-color: grey;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: var(--brand-1);
+    border-right: 2px solid var(--green);
+
+    > div {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .log-info {
+    width: 100%;
+    margin: 10px;
+
+    .log-summary {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .log-details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        padding: 5px;
+        border-radius: 5px;
+        border: 2px solid var(--green);
+        background-color: var(--brand-4);
+        color: var(--font-color);
+        font-size: 1rem;
+      }
+
+      .set-card {
+        display: flex;
+        gap: 1rem;
+        border: 1px solid var(--theme-color);
+        margin-bottom: 5px;
+        padding: 10px;
+        border-radius: 10px;
+
+        .set-number {
+          padding-right: 5px;
+          border-right: 1px solid var(--theme-color);
+        }
+      }
+    }
+  }
+}

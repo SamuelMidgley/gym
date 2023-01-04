@@ -1,5 +1,8 @@
 .exercise {
+  max-width: 900px;
+  width: calc(100% - 2rem);
   margin-top: 10px;
+  margin: 0 1rem;
 
   > div {
     margin: 10px 0px;
@@ -8,25 +11,53 @@
   .exercise-header {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+  }
 
-    > h1 {
-      padding: 5px;
-      background-color: var(--brand-3);
+  .summary-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    .exercise-button {
       padding: 10px 20px;
       border-radius: 20px;
-      // border-bottom: 1px solid var(--theme-color);
+      font-size: 1rem;
+      color: var(--font-color);
+      background-color: var(--brand-2);
+    }
+
+    .exercise-button:hover,
+    .button-active {
+      background-color: var(--brand-3);
     }
   }
+
   .exercise-summary {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    background-color: var(--brand-3);
+    border-radius: 20px;
+    padding: 20px;
+
+    .exercise-stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
 
     .exercise-orm {
       display: flex;
       justify-content: center;
+      background-color: var(--brand-4);
+      padding: 20px;
+      border-radius: 20px;
+      align-items: center;
+
+      > ul {
+        list-style: none;
+      }
 
       .orm-value {
         display: flex;
@@ -48,74 +79,11 @@
 
     .exercise-chart {
       width: 100%;
-      max-width: 700px;
     }
   }
   .exercise-log {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-}
-
-.log-card {
-  display: flex;
-  width: 100%;
-  max-width: 600px;
-  //border: 1px solid var(--theme-color);
-  margin: 10px;
-  border-radius: 10px;
-  background-color: var(--brand-3);
-
-  .log-date {
-    padding: 10px;
-    font-weight: bold;
-    background-color: grey;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-
-    > div {
-      display: flex;
-      justify-content: center;
-    }
-  }
-
-  .log-info {
-    width: 100%;
-    margin: 10px;
-
-    .log-summary {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    .log-details {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      button {
-        width: fit-content;
-        align-items: center;
-        padding: 5px;
-        border-radius: 5px;
-      }
-
-      .set-card {
-        display: flex;
-        gap: 1rem;
-        border: 1px solid var(--theme-color);
-        margin-bottom: 5px;
-        padding: 10px;
-        border-radius: 10px;
-
-        .set-number {
-          padding-right: 5px;
-          border-right: 1px solid var(--theme-color);
-        }
-      }
-    }
   }
 }

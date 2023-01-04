@@ -1,72 +1,11 @@
-import { useCallback, useState } from 'react'
+import classNames from 'classnames'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import LineChart from '../../../components/line-chart/LineChart'
-import getExercise, { IExerciseLog, ISet } from '../api'
+import getExercise, { IExerciseLog } from '../api'
+import LogCard from './components/LogCard'
 
 import './Exercise.scss'
-
-interface ILogCard {
-  log: IExerciseLog
-  onerepmax: number
-}
-
-function SetCard(props: ISet) {
-  const { set, reps, weight } = props
-  return (
-    <div className="set-card">
-      <div className="set-number">Set: {set}</div>
-      <div>{reps} reps</div>
-      <div>{weight}kg </div>
-    </div>
-  )
-}
-
-function LogCard(props: ILogCard) {
-  const [showDetails, setShowDetails] = useState(false)
-  const { log, onerepmax } = props
-  const dateSplit = log.date.toLocaleDateString().split('/')
-
-  const expandDetails = useCallback(() => {
-    setShowDetails((prevDetails) => !prevDetails)
-  }, [])
-
-  return (
-    <div className="log-card">
-      <div className="log-date">
-        <div>
-          {dateSplit[0]}/{dateSplit[1]}
-        </div>
-        <div>{dateSplit[2]}</div>
-      </div>
-      <div className="log-info">
-        <div className="log-summary">
-          <div>Sets: {log.sets.length}</div>
-          <div>
-            Max Weight: {log.sets[log.sets.length - 1].weight}kg (
-            {((log.sets[log.sets.length - 1].weight / onerepmax) * 100).toFixed(
-              0
-            )}
-            % of 1RM)
-          </div>
-        </div>
-        <div className="log-details">
-          {showDetails &&
-            log.sets.map((setObject) => (
-              <SetCard
-                key={`${setObject.set}`}
-                set={setObject.set}
-                reps={setObject.reps}
-                weight={setObject.weight}
-              />
-            ))}
-          <button type="button" onClick={expandDetails}>
-            {showDetails ? 'Hide Details' : 'View Details'}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 interface LineChartData {
   chartLabels: string[]
@@ -90,7 +29,73 @@ function createChartData(logs: IExerciseLog[]) {
   return chartData
 }
 
+interface IExerciseChart {
+  logs: IExerciseLog[]
+}
+
+function ExerciseChart(props: IExerciseChart) {
+  const { logs } = props
+  const { chartLabels, chartData } = createChartData(logs)
+
+  return (
+    <div className="exercise-chart">
+      <LineChart
+        chartLabels={chartLabels.reverse()}
+        chartData={chartData.reverse()}
+      />
+    </div>
+  )
+}
+
+function ExerciseStats() {
+  return (
+    <div className="exercise-stats">
+      <div className="exercise-orm">
+        <div className="orm-value">50kg</div>
+        <div className="orm-text">One Rep Max</div>
+      </div>
+      <div className="exercise-orm">
+        <ul>
+          <li>No. of repetitions: 1000</li>
+          <li>Total weight lifted: 400kg</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+interface IExerciseLogs {
+  logs: IExerciseLog[]
+  onerepmax: number
+}
+
+function ExerciseLogs(props: IExerciseLogs) {
+  const { logs, onerepmax } = props
+  return (
+    <div className="exercise-log">
+      {logs.map((log) => (
+        <LogCard key={log.date.toISOString()} onerepmax={onerepmax} log={log} />
+      ))}
+    </div>
+  )
+}
+
+function renderMenu(type: string, logs: IExerciseLog[], onerepmax: number) {
+  switch (type) {
+    case 'Stats':
+      return <ExerciseStats />
+    case 'Logs':
+      return <ExerciseLogs logs={logs} onerepmax={onerepmax} />
+    case 'Chart':
+      return <ExerciseChart logs={logs} />
+    default:
+      return <ExerciseChart logs={logs} />
+  }
+}
+
 export default function Exercise() {
+  const [menuType, setMenuType] = useState<string>('chart')
+
   const { exerciseId } = useParams()
   const id = parseInt(exerciseId ?? '', 10)
 
@@ -100,35 +105,28 @@ export default function Exercise() {
 
   const { name, onerepmax, logs } = getExercise(id)
 
-  const { chartData, chartLabels } = createChartData(logs)
-
   return (
-    <div className="exercise">
+    <main className="exercise">
       <div className="exercise-header">
         <h1>{name}</h1>
       </div>
-      <div className="exercise-summary">
-        <div className="exercise-orm">
-          <div className="orm-value">{onerepmax}kg</div>
-          <div className="orm-text">One Rep Max</div>
-        </div>
-        <div className="exercise-chart">
-          <LineChart
-            chartLabels={chartLabels.reverse()}
-            chartData={chartData.reverse()}
-          />
-        </div>
-      </div>
-      <div className="exercise-log">
-        <h2>Logs</h2>
-        {logs.map((log) => (
-          <LogCard
-            key={log.date.toISOString()}
-            onerepmax={onerepmax}
-            log={log}
-          />
+      <div className="summary-buttons">
+        {['Chart', 'Stats', 'Logs'].map((option) => (
+          <button
+            key={option}
+            type="button"
+            onClick={() => setMenuType(option)}
+            className={classNames('exercise-button', {
+              'button-active': menuType === option,
+            })}
+          >
+            {option}
+          </button>
         ))}
       </div>
-    </div>
+      <div className="exercise-summary">
+        {renderMenu(menuType, logs, onerepmax)}
+      </div>
+    </main>
   )
 }
