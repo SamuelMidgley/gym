@@ -6,6 +6,9 @@ import './InputWithSearch.scss'
 
 interface IInputWithSearch {
   type: 'workout' | 'exercise'
+  value: string
+  setValue: (arg0: string) => void
+  label: string
 }
 
 const useFocus = () => {
@@ -20,9 +23,8 @@ const useFocus = () => {
 }
 
 export default function InputWithSearch(props: IInputWithSearch) {
-  const { type } = props
+  const { type, value, setValue, label } = props
   const results = getAllOptions(type)
-  const [value, setValue] = useState('')
   const [filteredResults, setFilteredResults] = useState<IOptionResults[]>([])
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const [showMenu, setShowMenu] = useState(false)
@@ -80,15 +82,18 @@ export default function InputWithSearch(props: IInputWithSearch) {
         setShowMenu(true)
       }
     },
-    [filteredResults, selectedIndex]
+    [filteredResults, selectedIndex, setValue]
   )
 
-  const onClickHandler = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
-    const target = e.target as HTMLLIElement
-    setValue(target.innerText)
-    setSelectedIndex(-1)
-    setShowMenu(false)
-  }, [])
+  const onClickHandler = useCallback(
+    (e: React.MouseEvent<HTMLLIElement>) => {
+      const target = e.target as HTMLLIElement
+      setValue(target.innerText)
+      setSelectedIndex(-1)
+      setShowMenu(false)
+    },
+    [setValue]
+  )
 
   return (
     <div
@@ -106,6 +111,7 @@ export default function InputWithSearch(props: IInputWithSearch) {
           onKeyDown={onKeyDownHandler}
           onChange={(e) => setValue((e.target as HTMLInputElement).value)}
           ref={inputRef}
+          id={label}
         />
         <ExpandIcon />
       </div>

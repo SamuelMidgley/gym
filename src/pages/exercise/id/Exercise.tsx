@@ -94,7 +94,7 @@ function renderMenu(type: string, logs: IExerciseLog[], onerepmax: number) {
 }
 
 export default function Exercise() {
-  const [menuType, setMenuType] = useState<string>('chart')
+  const [menuType, setMenuType] = useState<string>('Chart')
 
   const { exerciseId } = useParams()
   const id = parseInt(exerciseId ?? '', 10)
