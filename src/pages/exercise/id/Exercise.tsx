@@ -5,8 +5,6 @@ import LineChart from '../../../components/line-chart/LineChart'
 import getExercise, { IExerciseLog } from '../api'
 import LogCard from './components/LogCard'
 
-import './Exercise.scss'
-
 interface LineChartData {
   chartLabels: string[]
   chartData: number[]
@@ -38,7 +36,7 @@ function ExerciseChart(props: IExerciseChart) {
   const { chartLabels, chartData } = createChartData(logs)
 
   return (
-    <div className="exercise-chart">
+    <div className="w-full">
       <LineChart
         chartLabels={chartLabels.reverse()}
         chartData={chartData.reverse()}
@@ -49,13 +47,15 @@ function ExerciseChart(props: IExerciseChart) {
 
 function ExerciseStats() {
   return (
-    <div className="exercise-stats">
-      <div className="exercise-orm">
-        <div className="orm-value">50kg</div>
-        <div className="orm-text">One Rep Max</div>
+    <div className="flex gap-4 flex-wrap">
+      <div className="flex justify-center bg-brand-500 p-5 rounded-2xl items-center">
+        <div className="flex justify-center items-center h-8 w-8 p-6 rounded-full mr-2 border-4 border-solid border-green">
+          50kg
+        </div>
+        <div className="flex items-center">One Rep Max</div>
       </div>
-      <div className="exercise-orm">
-        <ul>
+      <div className="flex justify-center bg-brand-500 p-5 rounded-2xl items-center">
+        <ul className="list-none">
           <li>No. of repetitions: 1000</li>
           <li>Total weight lifted: 400kg</li>
         </ul>
@@ -72,7 +72,7 @@ interface IExerciseLogs {
 function ExerciseLogs(props: IExerciseLogs) {
   const { logs, onerepmax } = props
   return (
-    <div className="exercise-log">
+    <div className="flex flex-col items-center">
       {logs.map((log) => (
         <LogCard key={log.date.toISOString()} onerepmax={onerepmax} log={log} />
       ))}
@@ -84,8 +84,6 @@ function renderMenu(type: string, logs: IExerciseLog[], onerepmax: number) {
   switch (type) {
     case 'Stats':
       return <ExerciseStats />
-    case 'Logs':
-      return <ExerciseLogs logs={logs} onerepmax={onerepmax} />
     case 'Chart':
       return <ExerciseChart logs={logs} />
     default:
@@ -106,26 +104,35 @@ export default function Exercise() {
   const { name, onerepmax, logs } = getExercise(id)
 
   return (
-    <main className="exercise">
-      <div className="exercise-header">
-        <h1>{name}</h1>
-      </div>
-      <div className="summary-buttons">
-        {['Chart', 'Stats', 'Logs'].map((option) => (
-          <button
-            key={option}
-            type="button"
-            onClick={() => setMenuType(option)}
-            className={classNames('exercise-button', {
-              'button-active': menuType === option,
-            })}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
-      <div className="exercise-summary">
-        {renderMenu(menuType, logs, onerepmax)}
+    <main className="max-w-4xl mt-2 mx-4 w-full">
+      <div className="mx-4">
+        <div className="flex justify-center my-3">
+          <h1 className="text-3xl">{name}</h1>
+        </div>
+        <div className="flex gap-4 items-center my-4">
+          {['Chart', 'Stats'].map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => setMenuType(option)}
+              className={classNames(
+                'py-2 px-5 rounded-2xl text-base text-white bg-brand-700 hover:bg-brand-600',
+                {
+                  'bg-brand-600': menuType === option,
+                }
+              )}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+        <div className="flex flex-col items-center gap-8 bg-brand-600 rounded-2xl p-5 my-4">
+          {renderMenu(menuType, logs, onerepmax)}
+        </div>
+        <div className="my-4">
+          <h3 className="text-2xl text-center">Logs</h3>
+          <ExerciseLogs logs={logs} onerepmax={onerepmax} />
+        </div>
       </div>
     </main>
   )
