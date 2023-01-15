@@ -25,7 +25,7 @@ function QuickLink(props: IQuickLink) {
   return (
     <div className="quick-link">
       {Icon}
-      <h3>{name}</h3>
+      <h3 className="text-lg">{name}</h3>
       <p>{desc}</p>
       <Link to={`/gym/${link}`}>Click here</Link>
     </div>
@@ -68,7 +68,7 @@ function HomeHeader() {
 function HomeLinks() {
   return (
     <article className="home-article">
-      <h2>Quick Links</h2>
+      <h2 className="text-2xl">Quick Links</h2>
       <ul>
         <li>
           <QuickLink
@@ -126,22 +126,13 @@ function TodayCard(props: ITodayCard) {
 function HomeToday() {
   return (
     <article className="home-article">
-      <h2>What&apos;s on today</h2>
+      <h2 className="text-2xl">What&apos;s on today</h2>
       <ul>
         <li>
           <TodayCard workout={workout3} />
         </li>
       </ul>
     </article>
-  )
-}
-
-function HomeFooter() {
-  const currentYear = new Date().getFullYear()
-  return (
-    <footer className="home-footer">
-      <span>&copy; {currentYear} - Samuel Midgley</span>
-    </footer>
   )
 }
 
@@ -153,7 +144,6 @@ export default function Home() {
         <HomeToday />
         <HomeLinks />
       </main>
-      <HomeFooter />
     </div>
   )
 }

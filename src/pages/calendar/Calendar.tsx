@@ -15,6 +15,7 @@ import {
   CalendarWorkoutDay,
   getWorkoutsFromDate,
 } from './api'
+import Button from '../../components/button/Button'
 
 interface ITableCell extends IDay {
   selectedDate: number
@@ -165,7 +166,7 @@ export default function Calendar() {
   return (
     <>
       <header>
-        <h1>Calendar</h1>
+        <h1 className="text-3xl mt-4 font-bold">Calendar</h1>
       </header>
       <main className="calendar-main">
         <section className="calendar-month">
@@ -182,7 +183,9 @@ export default function Calendar() {
             >
               <LeftIcon />
             </button>
-            <h2>{format(new Date(year, month, 1), 'LLLL yyyy')}</h2>
+            <h2 className="text-2xl">
+              {format(new Date(year, month, 1), 'LLLL yyyy')}
+            </h2>
             <button
               type="button"
               onClick={() => calendarChangeHandler('month', 1)}
@@ -242,7 +245,12 @@ export default function Calendar() {
               ))}
             </ul>
             <div className="add-button">
-              <button type="button">Add Workout</button>
+              <Button
+                type="button"
+                onClickHandler={() => console.log('clicked')}
+              >
+                Add Workout
+              </Button>
             </div>
           </section>
         )}

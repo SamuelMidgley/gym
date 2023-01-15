@@ -29,7 +29,7 @@ export default function SearchCard(props: ISearchCard) {
       <div className="search-card">
         <div className="search-icon">{renderIcon(type)}</div>
         <div>
-          <h2 className="search-name">{name}</h2>
+          <h2 className="search-name text-2xl">{name}</h2>
           <span>Last Updated: {lastUpdated.toLocaleDateString()}</span>
         </div>
         <div className="search-type">

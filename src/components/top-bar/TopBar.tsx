@@ -21,7 +21,11 @@ function TopBarMenu(props: ITopBarMenu) {
   const { clickHandler } = props
 
   return (
-    <div className={`top-bar-menu ${onHomePage ? 'top-bar-home' : ''}`}>
+    <div
+      className={`top-bar-menu bg-brand-600 ${
+        onHomePage ? 'top-bar-home' : ''
+      }`}
+    >
       <button type="button" onClick={clickHandler}>
         <CloseIcon />
       </button>
@@ -100,7 +104,7 @@ export default function TopBar() {
         </div>
       )}
       <Link to="/gym/home">
-        <h1>💪 Gym</h1>
+        <h1 className="text-3xl font-bold">💪 Gym</h1>
       </Link>
       {!reducedMenu && (
         <NavBar
