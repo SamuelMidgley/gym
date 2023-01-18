@@ -76,7 +76,9 @@ function NavBar(props: INavBar) {
 
 export default function TopBar() {
   const [showMenu, setShowMenu] = useState(false)
-  const [reducedMenu, setReducedMenu] = useState<boolean>(false)
+  const [reducedMenu, setReducedMenu] = useState<boolean>(
+    window.innerWidth < 750
+  )
 
   const onClickHandler = useCallback(() => {
     setShowMenu((prevState) => !prevState)

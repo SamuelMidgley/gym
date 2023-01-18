@@ -47,14 +47,14 @@ function ExerciseChart(props: IExerciseChart) {
 
 function ExerciseStats() {
   return (
-    <div className="flex gap-4 flex-wrap">
-      <div className="flex justify-center bg-brand-500 p-5 rounded-2xl items-center">
-        <div className="flex justify-center items-center h-8 w-8 p-6 rounded-full mr-2 border-4 border-solid border-green">
+    <div className="flex flex-wrap gap-4">
+      <div className="flex items-center justify-center rounded-2xl bg-brand-500 p-5">
+        <div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full border-4 border-solid border-green p-6">
           50kg
         </div>
         <div className="flex items-center">One Rep Max</div>
       </div>
-      <div className="flex justify-center bg-brand-500 p-5 rounded-2xl items-center">
+      <div className="flex items-center justify-center rounded-2xl bg-brand-500 p-5">
         <ul className="list-none">
           <li>No. of repetitions: 1000</li>
           <li>Total weight lifted: 400kg</li>
@@ -80,7 +80,7 @@ function ExerciseLogs(props: IExerciseLogs) {
   )
 }
 
-function renderMenu(type: string, logs: IExerciseLog[], onerepmax: number) {
+function renderMenu(type: string, logs: IExerciseLog[]) {
   switch (type) {
     case 'Stats':
       return <ExerciseStats />
@@ -104,33 +104,30 @@ export default function Exercise() {
   const { name, onerepmax, logs } = getExercise(id)
 
   return (
-    <main className="max-w-4xl mt-2 mx-4 w-full">
+    <main className="mx-4 mt-2 w-full max-w-4xl">
       <div className="mx-4">
-        <div className="flex justify-center my-3">
+        <div className="my-3 flex justify-center">
           <h1 className="text-3xl">{name}</h1>
         </div>
-        <div className="flex gap-4 items-center my-4">
+        <div className="mt-4 mb-2 flex items-center gap-4">
           {['Chart', 'Stats'].map((option) => (
             <button
               key={option}
               type="button"
               onClick={() => setMenuType(option)}
-              className={classNames(
-                'py-2 px-5 rounded-2xl text-base text-white bg-brand-700 hover:bg-brand-600',
-                {
-                  'bg-brand-600': menuType === option,
-                }
-              )}
+              className={`${
+                menuType === option ? 'bg-brand-600' : 'bg-brand-700'
+              } rounded-2xl py-2 px-5 text-base text-white hover:bg-brand-600 `}
             >
               {option}
             </button>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-8 bg-brand-600 rounded-2xl p-5 my-4">
-          {renderMenu(menuType, logs, onerepmax)}
+        <div className="mb-4 mt-2 flex flex-col items-center gap-8 rounded-2xl bg-brand-600 p-5">
+          {renderMenu(menuType, logs)}
         </div>
         <div className="my-4">
-          <h3 className="text-2xl text-center">Logs</h3>
+          <h3 className="text-center text-2xl">Logs</h3>
           <ExerciseLogs logs={logs} onerepmax={onerepmax} />
         </div>
       </div>

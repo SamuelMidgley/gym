@@ -36,7 +36,11 @@ export default function LogIn() {
             </label>
           </div>
           <div className="mt-4 flex items-center justify-center">
-            <Button type="submit" onClickHandler={(e) => onClickHandler(e)}>
+            <Button
+              type="submit"
+              onClickHandler={(e) => onClickHandler(e)}
+              primary
+            >
               Log in
             </Button>
           </div>

@@ -33,6 +33,7 @@ export default function Workout() {
 
         if (data) {
           setWorkoutData(data)
+          return
         }
 
         navigate('/gym/404')
