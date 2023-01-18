@@ -13,7 +13,7 @@
 
   .input-box {
     display: flex;
-    border: 2px solid var(--brand-4);
+    border: 2px solid var(--brand-5);
     padding: 5px;
     padding-left: 10px;
     border-radius: 5px;
@@ -26,7 +26,7 @@
     }
 
     .expand-icon {
-      border-left: 2px solid var(--brand-4);
+      border-left: 2px solid var(--brand-5);
       padding-left: 2px;
 
       svg {
@@ -39,7 +39,6 @@
     list-style: none;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    border: 1px solid var(--brand-4);
 
     > li {
       padding: 5px;

@@ -17,7 +17,7 @@ const Checkbox = (props: ICheckBox) => {
         type="checkbox"
         checked={value}
         onChange={onChange}
-        className="w-4 h-4 mr-2	"
+        className="w-4 h-4 mr-2	accent-green"
       />
       {label}
     </label>

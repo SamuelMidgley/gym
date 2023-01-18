@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import supabase from '../../../supabaseClient'
 
@@ -20,42 +20,45 @@ export default function Workout() {
   const [loading, setLoading] = useState<boolean>(false)
   const [workoutData, setWorkoutData] = useState<IWorkout>()
 
-  const getWorkout = async (id: number) => {
-    try {
-      setLoading(true)
+  const getWorkout = useCallback(
+    async (id: number) => {
+      try {
+        setLoading(true)
 
-      const { data, error, status } = await supabase
-        .from('workout')
-        .select()
-        .eq('id', id)
-        .single()
+        const { data, error, status } = await supabase
+          .from('workout')
+          .select()
+          .eq('id', id)
+          .single()
 
-      if (data) {
-        setWorkoutData(data)
+        if (data) {
+          setWorkoutData(data)
+        }
+
+        navigate('/gym/404')
+      } catch (error) {
+        navigate('/gym/404')
+      } finally {
+        setLoading(false)
       }
-
-      navigate('/gym/404')
-    } catch (error) {
-      navigate('/gym/404')
-    } finally {
-      setLoading(false)
-    }
-  }
+    },
+    [navigate]
+  )
 
   useEffect(() => {
-    console.log(workoutId)
     if (workoutId === undefined) {
       navigate('/gym/404')
+      return
     }
+
     const id = +workoutId
-    console.log(id)
 
     if (!id) {
       navigate('/gym/404')
     }
 
     getWorkout(id)
-  }, [workoutId, navigate])
+  }, [workoutId, navigate, getWorkout])
 
   return <h1>{workoutId}</h1>
 }

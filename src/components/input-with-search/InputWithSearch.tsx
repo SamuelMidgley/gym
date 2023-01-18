@@ -12,7 +12,7 @@ interface IInputWithSearch {
 }
 
 const useFocus = () => {
-  const htmlElRef = useRef(null)
+  const htmlElRef = useRef<HTMLDivElement>(null)
   const setFocus = () => {
     if (htmlElRef.current) {
       htmlElRef.current.focus()
@@ -29,7 +29,7 @@ export default function InputWithSearch(props: IInputWithSearch) {
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const [showMenu, setShowMenu] = useState(false)
   const [inputRef, setInputFocus] = useFocus()
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let newResults
@@ -98,7 +98,9 @@ export default function InputWithSearch(props: IInputWithSearch) {
   return (
     <div
       ref={ref}
-      className={classNames('input-with-search', { 'active-input': showMenu })}
+      className={classNames('input-with-search w-fit relative', {
+        'active-input': showMenu,
+      })}
       onClick={() => {
         setShowMenu((prevState) => !prevState)
         setInputFocus()
@@ -116,7 +118,7 @@ export default function InputWithSearch(props: IInputWithSearch) {
         <ExpandIcon />
       </div>
       {showMenu && filteredResults.length > 0 && (
-        <ul className="input-results">
+        <ul className="input-results absolute bottom-0-0 left-0 w-full z-10 bg-brand-500 border-2 border-brand-400">
           {filteredResults.map((result, index) => (
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events
             <li
