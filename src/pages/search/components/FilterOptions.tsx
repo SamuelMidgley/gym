@@ -10,16 +10,16 @@ const Checkbox = (props: ICheckBox) => {
   const { label, value, onChange } = props
 
   return (
-    <label htmlFor={label} className="flex items-center">
+    <label htmlFor={label} className="flex items-center first-letter:uppercase">
       <input
         id={label}
         name={label}
         type="checkbox"
         checked={value}
         onChange={onChange}
-        className="w-4 h-4 mr-2	accent-green"
+        className="mr-2 h-4 w-4	accent-green"
       />
-      {label}
+      <p className="first-letter:uppercase">{label}</p>
     </label>
   )
 }
@@ -38,9 +38,9 @@ export default function FilterOptions() {
   }
 
   return (
-    <section className="filter-options">
-      <h2 className="text-2xl">Filter options</h2>
-      <div>
+    <section>
+      <h2 className="mb-2 text-2xl">Filter options</h2>
+      <div className="w-full rounded-2xl bg-brand-600 px-5 py-3">
         <h3 className="text-xl">Type</h3>
         <Checkbox
           label="exercise"
