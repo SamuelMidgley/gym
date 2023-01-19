@@ -31,7 +31,11 @@ export default function Search() {
 
   return (
     <>
-      <header className="my-6 flex w-full flex-col items-center">
+      <header
+        className={`my-6 flex w-full flex-col items-center ${
+          showFilters ? 'blur' : ''
+        }`}
+      >
         <h1 className="mb-2 text-center text-3xl">Search</h1>
         <div className="inline-flex w-4/5 max-w-lg gap-4">
           <div className="inline-flex w-full items-center gap-4 rounded-3xl bg-brand-600 py-2 px-5">
@@ -49,15 +53,14 @@ export default function Search() {
           </div>
         </div>
       </header>
-      <main className="sm:col flex gap-5">
-        <FilterOptions />
-        {showFilters && <FilterOptions />}
+      <main className={`sm:col flex gap-5 ${showFilters ? 'blur' : ''}`}>
         <section>
           {searchResults.map((result) => (
             <SearchCard key={`${result.type}_${result.id}`} data={result} />
           ))}
         </section>
       </main>
+      {showFilters && <FilterOptions setShowFilters={setShowFilters} />}
     </>
   )
 }

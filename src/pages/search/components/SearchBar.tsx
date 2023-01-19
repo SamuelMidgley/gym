@@ -12,7 +12,7 @@ export default function SearchBar(props: ISearchBar) {
 
   return (
     <input
-      className="bg-transparent border-0 w-full text-lg"
+      className="w-full border-0 bg-transparent text-lg"
       type="text"
       value={searchTerm}
       onChange={(e) => setSearchTerm((e.target as HTMLInputElement).value)}
