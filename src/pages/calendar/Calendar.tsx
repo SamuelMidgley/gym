@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useCallback, useEffect, useState } from 'react'
 import { format, getMonth, getYear } from 'date-fns'
 import classNames from 'classnames'
@@ -96,6 +96,7 @@ export default function Calendar() {
   const [selectedDate, setSelectedDate] = useState<number>(-1)
   const [workouts, setWorkouts] = useState<IDay[]>([])
   const [workoutDay, setWorkoutDay] = useState<CalendarWorkoutDay[]>([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     const array = getMonthArray(month, year)
@@ -166,7 +167,7 @@ export default function Calendar() {
   return (
     <>
       <header>
-        <h1 className="text-3xl mt-4 font-bold">Calendar</h1>
+        <h1 className="mt-4 text-3xl font-bold">Calendar</h1>
       </header>
       <main className="calendar-main">
         <section className="calendar-month">
@@ -229,28 +230,32 @@ export default function Calendar() {
         </section>
         {selectedDate > -1 && (
           <section className="calendar-day">
-            <h2>
+            <h2 className="text-2xl">
               {format(new Date(year, month, selectedDate), 'EEEE do MMMM y')}
             </h2>
-            <ul>
-              {workoutDay.map((workout) => (
-                <li key={workout.workoutId}>
-                  <Link to={`/gym/workout/${workout.workoutId}`}>
-                    <div />
-                    <p>{`${format(workout.date, 'HH:mm')} : ${workout.name} - ${
-                      workout.location
-                    }`}</p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="add-button">
-              <Button
-                type="button"
-                onClickHandler={() => console.log('clicked')}
-              >
-                Add Workout
-              </Button>
+            <div className="h-5/6 rounded-2xl bg-brand-600 px-3 py-6">
+              <ul>
+                {workoutDay.map((workout) => (
+                  <li key={workout.workoutId}>
+                    <Link to={`/gym/workout/${workout.workoutId}`}>
+                      <div />
+                      <p className="text-center">{`${format(
+                        workout.date,
+                        'HH:mm'
+                      )} : ${workout.name} - ${workout.location}`}</p>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="add-button">
+                <Button
+                  primary
+                  type="button"
+                  onClickHandler={() => navigate('/gym/workout/add')}
+                >
+                  Add Workout
+                </Button>
+              </div>
             </div>
           </section>
         )}
