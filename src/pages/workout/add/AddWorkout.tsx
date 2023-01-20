@@ -105,7 +105,7 @@ function AddWorkoutSets(props: IAddWorkoutSets) {
         onClickHandler={() => addSetHandler()}
         primary={false}
       >
-        Add Set
+        Add Exercise
       </Button>
     </section>
   )
@@ -143,9 +143,9 @@ export default function AddWorkout() {
   }, [name, type, sets])
 
   return (
-    <main className="mx-4 mt-2 w-full max-w-4xl">
+    <main className="mx-4 mt-2">
       <h1 className="mt-10 ml-4 text-3xl">Add Workout</h1>
-      <div className=" my-4 gap-8 rounded-2xl bg-brand-600 p-5">
+      <div className=" my-4 gap-8 rounded-2xl bg-brand-600 p-10">
         <section className="mb-4">
           <h2 className="text-2xl">Basic Details</h2>
           <div className="my-2">
@@ -178,7 +178,7 @@ export default function AddWorkout() {
             </label>
           </div>
         </section>
-        {isWorkoutInFuture && <AddWorkoutSets sets={sets} setSets={setSets} />}
+        <AddWorkoutSets sets={sets} setSets={setSets} />
       </div>
       <div className="flex w-full justify-center align-middle">
         <Button type="button" onClickHandler={addWorkoutHandler} primary>
